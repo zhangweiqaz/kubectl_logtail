@@ -1,0 +1,18 @@
+stages:
+  - build
+
+build:
+  stage: build
+  image: i.harbor.dragonest.net/public/golang:1.16
+  tags:
+    - rancher
+    - dev
+  script:
+    - go env -w GO111MODULE=on
+    - go env -w GOPROXY=https://goproxy.cn,direct
+    - go build -o kubectl-logtail main.go
+  only:
+    - tags
+  artifacts:
+    paths:
+      - kubectl-logtail
